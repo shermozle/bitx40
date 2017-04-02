@@ -608,7 +608,7 @@ void setup()
   
   lcd.begin(16, 2);
   printBuff[0] = 0;
-  printLine1((char *)"Raduino v1.04"); 
+  printLine1((char *)"Raduino v1.04A"); 
   printLine2((char *)"             "); 
     
   // Start serial and initialize the Si5351
@@ -655,6 +655,12 @@ void setup()
   Serial.println("*Si5350 ON\n");       
   mode = MODE_NORMAL;
   delay(10);
+  
+  // Quick hack to enable USB for digital modes if the tuning knob is at max on startup.
+  int knob = analogRead(ANALOG_TUNING) - 10;
+  if (knob > 1010) {
+    isUSB = 1;
+  }
 }
 
 void loop(){
